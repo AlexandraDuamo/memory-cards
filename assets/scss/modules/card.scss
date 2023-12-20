@@ -1,0 +1,91 @@
+/*
+Enter Transition
+showBack = false -> true
+front -> back
+
+Exit Transition
+showBack = true -> false
+back -> front
+*/
+
+.flip-exit {
+  transform: rotateY(180deg);
+}
+
+.flip-exit-active {
+  transform: rotateY(0deg);
+  transition: transform 300ms;
+}
+
+.flip-exit-done {
+  transform: rotateY(0deg);
+}
+
+.flip-enter {
+  transform: rotateY(0deg);
+}
+
+.flip-enter-active {
+  transform: rotateY(180deg);
+  transition: transform 300ms;
+}
+
+.flip-enter-done {
+  transform: rotateY(180deg);
+}
+
+/* start */
+
+.card {
+  width: 100%;
+  height: 100%;
+  min-height: 120px;
+  perspective: 1000px;
+  cursor: pointer;
+
+  &__inner {
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: transform 0.5s;
+  }
+
+  &-face {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    font-weight: bold;
+
+    &--front {
+      backface-visibility: hidden;
+      object-fit: cover;
+    }
+    &--back {
+      background-color: $light-purple;
+      color: #fff;
+    }
+  }
+
+  &.flipped, &.open {
+    .card__inner {
+      transform: rotateY(180deg);
+    }
+    .card-face {
+      &--back {
+        backface-visibility: hidden;
+
+      }
+      &--front {
+        backface-visibility: visible;
+      }
+    }
+  }
+
+  &.open {
+    pointer-events: none;
+  }
+}

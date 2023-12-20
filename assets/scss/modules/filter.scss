@@ -1,0 +1,22 @@
+.filter {
+  margin-right: auto;
+  margin-left: auto;
+  min-width: 60%;
+
+  &__wr {
+    display: flex;
+    margin-right: -0.8rem;
+    margin-left: -0.8rem;
+
+    .select {
+      flex-grow: 1;
+      margin-right: 0.8rem;
+      margin-left: 0.8rem;
+    }
+  }
+
+  &__btn {
+    width: 100%;
+    margin-top: 2rem;
+  }
+}

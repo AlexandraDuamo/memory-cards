@@ -1,0 +1,23 @@
+.header {
+  background-image: url("~/assets/img/header-bg.jpg");
+  background-size: contain;
+  text-align: center;
+
+  &__wr {
+    background-color: rgba(27, 27, 27, 0.5);
+    padding-top: 5rem;
+    padding-bottom: 5rem;
+  }
+
+  * {
+    color: $white;
+  }
+
+  &__h1 {
+    font-size: 3rem;
+  }
+  &__text {
+    margin-top: 2rem;
+    font-size: 2rem;
+  }
+}

@@ -1,0 +1,36 @@
+.btn {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.8rem;
+  line-height: 2.6rem;
+  padding: 0.8rem 1rem;
+  width: fit-content;
+  transition: all 0.3s ease-in-out;
+  border-radius: 0.2rem;
+
+  &--purple {
+    background-color: $purple;
+    border: 1px solid $purple;
+    color: $white;
+
+    * {
+      color: $white;
+    }
+  }
+
+  &--yellow {
+    background-color: $yellow;
+    border: 1px solid $yellow;
+  }
+
+  &:disabled {
+    opacity: 0.8;
+    cursor: not-allowed;
+  }
+  &:not(:disabled):hover {
+    background-color: transparent;
+    cursor: pointer;
+    border-color: $white;
+    color: $white;
+  }
+
+}

@@ -1,8 +1,24 @@
 .game-end {
-  &__msg {
+  margin-top: 3rem;
 
+  * {
+    color: $white;
+    font-size: 2rem;
+    line-height: 2.5rem;
+  }
+
+  &__msg {
+    text-align: center;
+
+    &-mark {
+      font-family: 'Ubuntu', sans-serif;
+      margin-bottom: 1rem;
+      display: block;
+      font-size: 3rem;
+    }
   }
   &__gif {
-
+    margin-top: 2rem;
+    width: 100%;
   }
 }

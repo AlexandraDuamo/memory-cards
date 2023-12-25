@@ -1,5 +1,5 @@
 <template>
-  <section class="main-app container">
+  <div class="main-app container">
 
     <Filter @getCards="getCards" :cardsLength="cards.length"/>
 
@@ -9,7 +9,6 @@
         <Timers :cardsOpen="cardsOpen" :gameEnded="gameEnded"/>
         <div class="cards-list">
           <Card v-for="(card, index) in cards"
-                :cards="cards"
                 @flipCard="flipCard"
                 :cardsFlipped="cardsFlipped.length"
                 :key="index" :card="card"/>
@@ -20,29 +19,29 @@
       </div>
     </div>
     <section v-else class="game-end">
-      <p class="game-end__msg"></p>
-      <div class="game-end__gif" style="width:100%;height:0;padding-bottom:55%;position:relative;">
-        <iframe src="https://giphy.com/embed/bSaZ6eXAOO01SX75w2" width="100%" height="100%"
-                style="position:absolute" frameBorder="0" class="giphy-embed" allowFullScreen></iframe>
-      </div>
+      <p class="game-end__msg">
+        <span class="game-end__msg-mark">Congratulations!</span><br>
+        You've successfully matched all the pairs and completed the memory card game.<br>
+        To start new game click "Get cards"!
+      </p>
+      <img alt="Rick and Morty gif"
+          src="assets/img/rick-and-mortyj.gif" class="game-end__gif">
     </section>
-
-
-  </section>
+  </div>
 </template>
 
 <script>
 import Card from "../compontents/Card";
 import Filter from "../compontents/Filter";
+import Timers from "../compontents/Timers";
 
 import axios from "axios";
 import { ref, computed } from "vue";
-import Timers from "../compontents/Timers";
 
 export default {
-  components: {Timers, Filter, Card },
+  components: { Timers, Filter, Card },
   layout: ['default'],
-  setup() {
+  setup(context) {
     let charactersData = ref({});
     let cards = ref([]);
     let loading = ref(false);
@@ -51,6 +50,7 @@ export default {
     let gameEnded = ref(false);
 
     let debounceTimeout;
+    const DEBOUNCE_TIMEOUT = 800;
 
     const cardsFlipped = computed(() => {
       return cards.value.map(card => (card.flipped === true ? card : null)).filter(Boolean);
@@ -89,7 +89,7 @@ export default {
 
       debounceTimeout = setTimeout(() => {
         cardsFlipped.value.forEach(el => el.flipped = false)
-      }, 800);
+      }, DEBOUNCE_TIMEOUT);
 
       if (cardsOpen.value === cards.value.length) {
         gameEnded.value = true;
@@ -97,6 +97,7 @@ export default {
     };
 
     const getCards = (params) => {
+      console.log(context.$config.charactersRoute)
       let url = '/api/character';
       loading.value = true;
 
@@ -148,4 +149,3 @@ export default {
   },
 };
 </script>
-<style></style>

@@ -1,5 +1,5 @@
-const configDev = {
-    login: '/session'
+const config = {
+    charactersRoute: '/api/character'
 }
 
-export {configDev}
+export { config }

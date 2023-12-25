@@ -1,11 +1,7 @@
-// https://nuxt.com/docs/api/configuration/nuxt-config
-import {configDev} from './config';
-
 export default defineNuxtConfig({
   devtools: { enabled: true },
   buildModules: ['nuxt-vite'],
   modules: [
-    '@pinia/nuxt',
     '@nuxtjs/proxy',
     'nuxt-swiper'
   ],
@@ -23,15 +19,9 @@ export default defineNuxtConfig({
     '/api/character': { proxy: 'https://rickandmortyapi.com/api/character' },
     '/api/episode': { proxy: 'https://rickandmortyapi.com/api/episode' }
   },
-  pinia: {
-    storesDirs: ['./store/**', './store'],
-  },
   loaders: {
     sass: {
       implementation: require('sass'),
     },
   },
-  modules: [
-    '@pinia/nuxt',
-  ],
 })

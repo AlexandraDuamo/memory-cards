@@ -1,6 +1,6 @@
 <template>
   <article class="card" @click="flipCard"
-           :class="{'flipped': card.flipped, 'open': card.open}">
+           :class="{'flipped': cardFlipped, 'open': cardOpen}">
     <div class="card__inner">
       <img :src="card.image"
            class="card-face card-face--front"
@@ -17,19 +17,21 @@ import { toRef } from "vue";
 
 export default {
   name: 'Card',
-  props: ['card', 'cardsFlipped'],
+  props: ['card', 'cardFlipped', 'cardOpen'],
   setup(props, context) {
-    let card = toRef(props.card);
+    let card = toRef(props, 'card');
+    let cardFlipped = toRef(props, 'cardFlipped');
+    let cardOpen = toRef(props, 'cardOpen');
 
     const flipCard = () => {
-      if (!card.value.open && !card.value.flipped && (props.cardsFlipped < 2)) {
-        card.value.flipped = true;
-        context.emit('flipCard', card)
-      }
+      context.emit('flipCard', card.value.id);
     }
 
     return {
       card,
+
+      cardFlipped,
+      cardOpen,
 
       flipCard
     }

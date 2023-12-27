@@ -6,11 +6,13 @@
     <div v-if="!gameEnded">
       <section class="flex cards-list__wr"
            v-if="cards.length && !loading">
-        <Timers :cardsOpen="cardsOpen" :gameEnded="gameEnded"/>
+        <Timers :cardsOpen="cardsOpen.length"
+                :gameEnded="gameEnded"/>
         <div class="cards-list">
           <Card v-for="(card, index) in cards"
                 @flipCard="flipCard"
-                :cardsFlipped="cardsFlipped.length"
+                :cardFlipped="cardsFlipped.includes(card.id)"
+                :cardOpen="cardsOpen.includes(card.id)"
                 :key="index" :card="card"/>
         </div>
       </section>
@@ -49,15 +51,11 @@ export default {
 
     let gameEnded = ref(false);
 
+    let cardsFlipped = ref([]);
+    let cardsOpen = ref([]);
+
     let debounceTimeout;
     const DEBOUNCE_TIMEOUT = 800;
-
-    const cardsFlipped = computed(() => {
-      return cards.value.map(card => (card.flipped === true ? card : null)).filter(Boolean);
-    })
-    const cardsOpen = computed(() => {
-      return cards.value.map(card => (card.open === true ? card : null)).filter(Boolean).length;
-    })
 
     const shuffleCards = () => {
       cards.value.forEach(el => {
@@ -71,33 +69,35 @@ export default {
       }
     }
 
-    const flipCard = () => {
+    const flipCard = (id) => {
+      if (cardsFlipped.value.length < 2) {
+        cardsFlipped.value.push(id);
+      }
+
       if (cardsFlipped.value.length === 2) {
-        let id1 = Number(cardsFlipped.value[0].id.split('.')[0]);
-        let id2 = Number(cardsFlipped.value[1].id.split('.')[0]);
+        let id1 = Number(cardsFlipped.value[0].split('.')[0]);
+        let id2 = Number(cardsFlipped.value[1].split('.')[0]);
         if (id1 === id2) {
-          cardsFlipped.value[0].open = true;
-          cardsFlipped.value[1].open = true;
+          cardsOpen.value.push(...cardsFlipped.value);
         }
       }
 
       // back flip
-
       if (debounceTimeout) {
         clearTimeout(debounceTimeout);
       }
 
       debounceTimeout = setTimeout(() => {
-        cardsFlipped.value.forEach(el => el.flipped = false)
+        cardsFlipped.value = [];
       }, DEBOUNCE_TIMEOUT);
 
-      if (cardsOpen.value === cards.value.length) {
+      if (cardsOpen.value.length === cards.value.length) {
         gameEnded.value = true;
       }
     };
 
     const getCards = (params) => {
-      console.log(context.$config.charactersRoute)
+      //console.log(context.$config.charactersRoute)
       let url = '/api/character';
       loading.value = true;
 
@@ -111,16 +111,12 @@ export default {
 
             cards.value = res.data.results.slice(0, 8);
             cards.value.forEach(el => {
+              el.id = String(el.id);
               let elCopy = JSON.parse(JSON.stringify(el));
               elCopy.id += '.1'
               cardsCopyArray.value.push(elCopy)
             })
             cards.value = cards.value.concat(cardsCopyArray.value);
-            cards.value.forEach(el => {
-              el.flipped = false;
-              el.open = false;
-              el.id = String(el.id);
-            });
 
             shuffleCards();
           })

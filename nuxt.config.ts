@@ -1,10 +1,6 @@
 export default defineNuxtConfig({
   devtools: { enabled: true },
   buildModules: ['nuxt-vite'],
-  modules: [
-    '@nuxtjs/proxy',
-    'nuxt-swiper'
-  ],
   css: [
     '~/assets/scss/style.scss',
   ],

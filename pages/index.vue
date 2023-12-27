@@ -58,11 +58,6 @@ export default {
     const DEBOUNCE_TIMEOUT = 800;
 
     const shuffleCards = () => {
-      cards.value.forEach(el => {
-        el.flipped = false;
-        el.open = false;
-      })
-
       for (let i = cards.value.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
         [cards.value[i], cards.value[j]] = [cards.value[j], cards.value[i]];
@@ -97,7 +92,6 @@ export default {
     };
 
     const getCards = (params) => {
-      //console.log(context.$config.charactersRoute)
       let url = '/api/character';
       loading.value = true;
 

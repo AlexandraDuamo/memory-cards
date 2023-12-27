@@ -12,8 +12,7 @@ export default defineNuxtConfig({
     base: '/'
   },
   routeRules: {
-    '/api/character': { proxy: 'https://rickandmortyapi.com/api/character' },
-    '/api/episode': { proxy: 'https://rickandmortyapi.com/api/episode' }
+    '/api/character': { proxy: 'https://rickandmortyapi.com/api/character' }
   },
   loaders: {
     sass: {

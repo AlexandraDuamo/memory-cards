@@ -1,6 +1,8 @@
-# Nuxt 3 Minimal Starter
+# Rick & Morty memory cards game
 
-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+Game created using https://rickandmortyapi.com api.
+Set filters for characters used in cards, set timer (optional),
+find all pairs and win the game!
 
 ## Setup
 
